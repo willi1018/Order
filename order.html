@@ -86,7 +86,7 @@
 <body>
     <nav>
         <a href="#" onclick="showPage('orderPage')">Home</a>
-        <a href="https://docs.google.com/spreadsheets/d/1i5qNPDHBz3fjoYZoTr3MM6DrB3P47jFgSqevyBZlr80/edit?usp=sharing">Data</a>
+        <a href="https://utpmy-my.sharepoint.com/:x:/g/personal/zhen_20000007_utp_edu_my/EZW3oyk4QAJBtB3JQS1hnN4B6pT2ZntHeNHZLW7PwbC8Xw?email=wloveqr%40gmail.com&e=lCqqsA">Data</a>
     </nav>
 
     <div id="orderPage" class="container">
@@ -115,7 +115,7 @@
                 <label>烧肉</label>
                 <div class="quantity-control">
                     <button type="button" onclick="changeQuantity('roast_pork', -1)">-</button>
-                    <input type="number" name="roast_pork" value="0" min="0">
+                    <input type="number" name="roast_pork" value="0" min="0" step="0.5">
                     <button type="button" onclick="changeQuantity('roast_pork', 1)">+</button>
                 </div>
             </div>
@@ -137,9 +137,11 @@
 
         function changeQuantity(itemName, change) {
             const input = document.querySelector(`input[name="${itemName}"]`);
-            const currentValue = parseInt(input.value);
-            if (currentValue + change >= 0) {
-                input.value = currentValue + change;
+            const step = itemName === 'roast_pork' ? 0.5 : 1; // Use 0.5 step for roast pork
+            const currentValue = parseFloat(input.value);
+            const newValue = currentValue + change * step;
+            if (newValue >= 0) {
+                input.value = newValue.toFixed(1); // Keep one decimal place
             }
         }
 
@@ -150,7 +152,7 @@
                 phone_number: document.querySelector('input[name="phone_number"]').value,
                 roast_chicken: parseInt(document.querySelector('input[name="roast_chicken"]').value),
                 roast_duck: parseInt(document.querySelector('input[name="roast_duck"]').value),
-                roast_pork: parseInt(document.querySelector('input[name="roast_pork"]').value)
+                roast_pork: parseFloat(document.querySelector('input[name="roast_pork"]').value)
             };
             saveOrder(orderData);
         });
@@ -166,6 +168,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Order submitted successfully!');
+					location.reload();
                 } else {
                     alert('Failed to save order.');
                 }
