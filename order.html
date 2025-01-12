@@ -76,7 +76,8 @@
             margin-bottom: 5px;
         }
         .form-group input[type="tel"],
-        .form-group input[type="date"] {
+        .form-group input[type="date"],
+        .form-group input[type="time"] {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -98,7 +99,7 @@
                 <div class="quantity-control">
                     <button type="button" onclick="changeQuantity('roast_chicken', -1)">-</button>
                     <input type="number" name="roast_chicken" value="0" min="0">
-					<span>只</span>
+                    <span>只</span>
                     <button type="button" onclick="changeQuantity('roast_chicken', 1)">+</button>
                 </div>
             </div>
@@ -108,7 +109,7 @@
                 <div class="quantity-control">
                     <button type="button" onclick="changeQuantity('roast_duck', -1)">-</button>
                     <input type="number" name="roast_duck" value="0" min="0">
-					<span>只</span>
+                    <span>只</span>
                     <button type="button" onclick="changeQuantity('roast_duck', 1)">+</button>
                 </div>
             </div>
@@ -118,7 +119,7 @@
                 <div class="quantity-control">
                     <button type="button" onclick="changeQuantity('roast_pork', -1)">-</button>
                     <input type="number" name="roast_pork" value="0" min="0" step="0.5">
-					<span>kg</span>
+                    <span>kg</span>
                     <button type="button" onclick="changeQuantity('roast_pork', 1)">+</button>
                 </div>
             </div>
@@ -130,6 +131,10 @@
             <div class="form-group">
                 <label>Date:</label>
                 <input type="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label>Time:</label>
+                <input type="time" name="time" required>
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -152,6 +157,7 @@
             event.preventDefault();
             const orderData = {
                 date: document.querySelector('input[name="date"]').value,
+                time: document.querySelector('input[name="time"]').value,
                 phone_number: document.querySelector('input[name="phone_number"]').value,
                 roast_chicken: parseInt(document.querySelector('input[name="roast_chicken"]').value),
                 roast_duck: parseInt(document.querySelector('input[name="roast_duck"]').value),
@@ -171,7 +177,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Order submitted successfully!');
-					location.reload();
+                    location.reload();
                 } else {
                     alert('Failed to save order.');
                 }
